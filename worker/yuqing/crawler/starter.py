@@ -10,6 +10,10 @@ import worker.yuqing.crawler.bingspider.BingStarter as bingEntrance
 import worker.yuqing.crawler.weibospider.run_spider as weiboEntrance
 from worker.yuqing.crawler.weibospider.pipelines import MongoDBPipeline
 
+
+import torch
+import torch.nn.functional as F
+
 class MongoDBPipeline_MenHu(object):
     def __init__(self):
         client = pymongo.MongoClient(MONGO_HOST, MONGO_PORT)
@@ -66,7 +70,25 @@ def run(key_words):
     weiboEntrance.weiboStarter(key_words=key_words)
     return 'success'
 
+class testModel(torch.nn.Module):
+    def __init__(self):
+        super(testModel, self).__init__()
+        self.linear = torch.nn.Linear(in_features=3, out_features=2)
+    def forward(self,x):
+        x = self.linear(x)
+        return x
+    def num_flat_features(self,x):
+        size=x.size()[1:] # all dimensions except the batch dimension
+        num_features=1
+        for s in size:
+            num_features*=s
+        return num_features
 
+def runTest(key_words):
+    net = testModel()
+    net.forward(torch.FloatTensor([[1.0,2.0,3.0],[4.0,5.0,6.0]]))
+    torch.save(net,"D:/testModel.pth")
+    return 'success'
 
 
 if __name__ == '__main__':
@@ -88,7 +110,6 @@ if __name__ == '__main__':
 #     "news_comments": [],
 #     "news_site": "www.thepaper.cn"
 # }).replace("'", '"'))]
-
     for item in news163_dicts:
         pipeline.process_item(item)
     for item in newsQQ_dicts:

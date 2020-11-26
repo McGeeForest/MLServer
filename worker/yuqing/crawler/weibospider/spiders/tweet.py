@@ -126,8 +126,8 @@ class TweetSpider(Spider):
 
         def init_url_by_keywords():
             # crawl tweets include keywords in a period, you can change the following keywords and date
-            # keywords = ['火灾']
-            keywords = self.key_words
+            keywords = ['火灾']
+            # keywords = self.key_words
             date_end = datetime.datetime.strptime(str(datetime.date.today()), '%Y-%m-%d')       # 当前时间
             date_start = date_end - datetime.timedelta(days=10)                                  # 开始是前10天
             time_spread = datetime.timedelta(days=1)

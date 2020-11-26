@@ -13,15 +13,13 @@ from facade.TaskCrawlerFacade import TaskCrawlerFacade
 from concurrent import futures
 
 def run():
-    crawler_server = grpc.server()
-    tc_pb2_grpc.add_taskcrawlerServicer_to_server(TaskCrawlerFacade(), crawler_server)
-
-
+    # crawler_server = grpc.server()
+    # tc_pb2_grpc.add_taskcrawlerServicer_to_server(TaskCrawlerFacade(), crawler_server)
 
     grpc_server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     # s1_pb2_grpc.add_Server1Servicer_to_server(Server1Facade(), grpc_server)
     # s2_pb2_grpc.add_Server2Servicer_to_server(Server2Facade(), grpc_server)
-    # tm_pb2_grpc.add_TaskManageServicer_to_server(TaskManageFacade(), grpc_server)
+    tm_pb2_grpc.add_TaskManageServicer_to_server(TaskManageFacade(), grpc_server)
     tc_pb2_grpc.add_taskcrawlerServicer_to_server(TaskCrawlerFacade(), grpc_server)
     grpc_server.add_insecure_port('[::]:5001')
     grpc_server.start()

@@ -23,11 +23,14 @@ class TaskCrawlerFacade(pb2_grpc.taskcrawlerServicer):
 
         #msg = 'Server1 TaskId is {0} and param is {1}.'.format(taskId, param)
         # msg = 'Task is run in backend'
-        return pb2.Crawler1Reply(message = t.start())
+        return pb2.Crawler1Reply(message = "tetete")
 
 
     def work(self, taskId, param):
-        msg = starter.run(eval(param))
+        print("进入方法")
+        msg = starter.runTest(eval(param))
+        # msg = starter.run(eval(param))
+
         # t = threading.current_thread()
         #
         # for i in range(1, 600000):
